@@ -2,7 +2,15 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from rag.rag_engine import ask_question
+# --------------------------------------------------
+# Chatbot Import (Safe Mode)
+# --------------------------------------------------
+
+try:
+    from rag.rag_engine import ask_question
+    CHATBOT_AVAILABLE = True
+except Exception:
+    CHATBOT_AVAILABLE = False
 
 # --------------------------------------------------
 # Page Configuration
@@ -52,7 +60,7 @@ with col1:
         """
 **Growth Leader**
 
-AMD demonstrates the strongest recent revenue growth trajectory among the companies analyzed.
+AMD demonstrates strong recent revenue growth among the analyzed companies.
 """
     )
 
@@ -60,7 +68,7 @@ AMD demonstrates the strongest recent revenue growth trajectory among the compan
         """
 **AI Market Momentum**
 
-NVIDIA experienced significant revenue acceleration driven by AI infrastructure and data center demand.
+NVIDIA experienced significant revenue acceleration driven by AI infrastructure demand.
 """
     )
 
@@ -70,7 +78,7 @@ with col2:
         """
 **Largest Asset Base**
 
-Intel maintains the largest asset base and overall operational scale.
+Intel maintains the largest asset base and operational scale.
 """
     )
 
@@ -78,7 +86,7 @@ Intel maintains the largest asset base and overall operational scale.
         """
 **AI-Powered Analysis**
 
-The integrated RAG chatbot answers questions directly from SEC filings with source citations.
+The solution combines financial analytics with Retrieval-Augmented Generation (RAG).
 """
     )
 
@@ -142,11 +150,6 @@ revenue_chart = px.line(
     title="Revenue Comparison Across Years"
 )
 
-revenue_chart.update_layout(
-    xaxis_title="Year",
-    yaxis_title="Revenue (USD)"
-)
-
 st.plotly_chart(
     revenue_chart,
     use_container_width=True
@@ -167,11 +170,6 @@ growth_chart = px.bar(
     title="Year-over-Year Revenue Growth"
 )
 
-growth_chart.update_layout(
-    xaxis_title="Year",
-    yaxis_title="Growth Percentage"
-)
-
 st.plotly_chart(
     growth_chart,
     use_container_width=True
@@ -190,11 +188,6 @@ asset_chart = px.line(
     color="company",
     markers=True,
     title="Assets Comparison Across Years"
-)
-
-asset_chart.update_layout(
-    xaxis_title="Year",
-    yaxis_title="Assets (USD)"
 )
 
 st.plotly_chart(
@@ -218,16 +211,16 @@ summary_df["Assets (Billions)"] = (
     summary_df["assets"] / 1_000_000_000
 ).round(2)
 
-display_columns = [
-    "company",
-    "year",
-    "Revenue (Billions)",
-    "Assets (Billions)",
-    "growth_pct"
-]
-
 st.dataframe(
-    summary_df[display_columns],
+    summary_df[
+        [
+            "company",
+            "year",
+            "Revenue (Billions)",
+            "Assets (Billions)",
+            "growth_pct"
+        ]
+    ],
     use_container_width=True
 )
 
@@ -246,15 +239,15 @@ for company in filtered_df["company"].unique():
         .sort_values("year")
     )
 
-    growth_series = (
+    growth_values = (
         company_df["growth_pct"]
         .dropna()
     )
 
-    if len(growth_series) == 0:
+    if len(growth_values) == 0:
         continue
 
-    latest_growth = growth_series.iloc[-1]
+    latest_growth = growth_values.iloc[-1]
 
     if latest_growth > 20:
 
@@ -275,50 +268,66 @@ for company in filtered_df["company"].unique():
         )
 
 # --------------------------------------------------
-# Chatbot
+# Chatbot Section
 # --------------------------------------------------
 
 st.markdown("---")
 
 st.header("🤖 Financial Filing Chatbot")
 
-st.markdown(
-    """
-**Example Questions**
+if not CHATBOT_AVAILABLE:
+
+    st.warning(
+        """
+The chatbot is unavailable in the deployed version because the FAISS vector database is not included in cloud deployment.
+
+Local Version Features:
+- SEC filing retrieval
+- RAG-based question answering
+- Source citations
+- GPT-powered responses
+"""
+    )
+
+else:
+
+    st.markdown(
+        """
+### Example Questions
 
 - How did Intel revenue change in 2024?
 - What AI opportunities did AMD discuss?
 - What risks did NVIDIA identify?
 - Compare AMD and Intel business strategies.
 """
-)
-
-question = st.text_area(
-    "Ask a question about SEC filings",
-    height=100
-)
-
-if question:
-
-    with st.spinner(
-        "Analyzing SEC filings..."
-    ):
-
-        result = ask_question(
-            question
-        )
-
-    st.subheader("Answer")
-
-    st.write(
-        result["answer"]
     )
 
-    st.subheader("Sources")
+    question = st.text_area(
+        "Ask a question about SEC filings",
+        height=120
+    )
 
-    for source in result["sources"]:
+    if question:
 
-        st.code(source)
+        with st.spinner(
+            "Analyzing SEC filings..."
+        ):
+
+            result = ask_question(
+                question
+            )
+
+        st.subheader("Answer")
+
+        st.success(
+            result["answer"]
+        )
+
+        st.subheader("Sources")
+
+        for source in result["sources"]:
+
+            st.code(source)
 
 # --------------------------------------------------
 # Footer
@@ -327,5 +336,5 @@ if question:
 st.markdown("---")
 
 st.caption(
-    "Data Source: SEC Company Facts API + SEC EDGAR Filings | Built with Streamlit, FAISS, LangChain, OpenAI, and HuggingFace Embeddings"
+    "Data Source: SEC Company Facts API + SEC EDGAR Filings | Built with Streamlit, LangChain, FAISS, OpenAI, HuggingFace Embeddings, and Plotly"
 )

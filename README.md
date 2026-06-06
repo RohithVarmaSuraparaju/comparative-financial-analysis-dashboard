@@ -88,3 +88,7 @@ python rag/chatbot.py
 - Financial ratio analysis
 DASHBOARD SCREENSHOTS : 
 <img width="1470" height="800" alt="Screenshot 2026-06-06 at 2 46 57 AM" src="https://github.com/user-attachments/assets/d8793987-a45f-4e2f-9e7e-af8520a39dcd" />
+<img width="1470" height="803" alt="Screenshot 2026-06-06 at 2 46 01 AM" src="https://github.com/user-attachments/assets/19325c96-51b1-4151-a5c0-f466ab677b29" />
+<img width="1470" height="797" alt="Screenshot 2026-06-06 at 2 46 42 AM" src="https://github.com/user-attachments/assets/639cc228-5048-4da5-9abf-99261d47cd6d" />
+<img width="1470" height="794" alt="Screenshot 2026-06-06 at 2 47 17 AM" src="https://github.com/user-attachments/assets/715c20ac-fd15-438d-ab5e-d70d9e4699c4" />
+<img width="1470" height="800" alt="Screenshot 2026-06-06 at 2 46 23 AM" src="https://github.com/user-attachments/assets/ffa0af14-3e13-4524-93f4-bad0ba7712ff" />

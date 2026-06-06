@@ -4,9 +4,7 @@ An AI-powered financial intelligence platform that combines SEC financial data, 
 
 ## 🚀 Live Demo
 
-**Deployed Application:** YOUR_STREAMLIT_LINK
-
-**GitHub Repository:** https://comparative-financial-analysis-dashboard.streamlit.app/
+**Deployed Application:** https://comparative-financial-analysis-dashboard.streamlit.app/
 ---
 
 ## 📌 Project Overview

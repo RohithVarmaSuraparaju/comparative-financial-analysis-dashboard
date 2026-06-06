@@ -86,3 +86,5 @@ python rag/chatbot.py
 - Enhanced retrieval ranking
 - Multi-company comparison reasoning
 - Financial ratio analysis
+DASHBOARD SCREENSHOTS : 
+<img width="1470" height="800" alt="Screenshot 2026-06-06 at 2 46 57 AM" src="https://github.com/user-attachments/assets/d8793987-a45f-4e2f-9e7e-af8520a39dcd" />

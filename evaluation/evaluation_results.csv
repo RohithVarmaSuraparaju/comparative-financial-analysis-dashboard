@@ -1,0 +1,6 @@
+question,expected_behavior,result,citation_present,status
+How did Intel revenue change in 2024?,Should return revenue decline and reason,Correct,Yes,Pass
+What AI opportunities did AMD discuss?,Should summarize AI initiatives,Correct,Yes,Pass
+What risks did NVIDIA mention?,Should identify risks from filings,Correct,Yes,Pass
+Compare AMD and Intel business strategies.,Should compare based on retrieved evidence,Partial,Yes,Pass
+What was AMD revenue in 2025?,Should provide revenue figure,Correct,Yes,Pass

@@ -12,4 +12,8 @@ sec-edgar-downloader
 pypdf
 tiktoken
 python-dotenv
+sentence-transformers
+transformers
+torch
 requests
+langchain-huggingface
